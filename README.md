@@ -93,7 +93,7 @@ performExploit();
 ```
 ##**Instructions**
 
-1. Copy the above code and run it in a Exploitable PS5 isn't useful in ps4
+1. Copy the above code and run it in a Exploitable PS5(Works Untill guess 9.60?) this might not be useful in ps4
 
 
 2. Be mindful that this is a PoC and should be used for educational purposes only.
