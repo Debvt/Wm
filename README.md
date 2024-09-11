@@ -101,11 +101,15 @@ performExploit();
 
 3. Further testing is required to fully understand this vulnerability.
 
-4.Place This code dosent contain any payload you will need your own
+4.Place Your Payload in the payload function
 
 Disclaimer
 
 This PoC is for educational purposes only. The author is not responsible for any misuse of this code.
 ##**IM NOT LIABLE TO ANY DAMAGES CAUSED BY THIS POC OR ANY OTHER USE OF IT THIS CAN BRICK AND MIGHT BRICK YOUR SYSTEM IF LEFT UNEDITED **
-##A Message to Sony 
+
+
+**A Message to Sony**
+
+
 Sony I have reported this and got dismmised and I have provided enough proof it with that unreleased PoC it's not my fault that even after 6months you didn't fix it I have gave you more then enough to fix this is to hopefully encourage you to fix it 
