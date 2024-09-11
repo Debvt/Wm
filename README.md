@@ -115,7 +115,7 @@ This PoC is for educational purposes only. The author is not responsible for any
 Sony I have reported this and got dismmised and I have provided enough proof plus with that unreleased PoC it's not my fault that even after 6months you didn't fix it I have gave you more then enough to fix this is to hopefully encourage you to fix it 
 
 ## heap memory exploit code
-```
+```javascript
 function memmexh() {
         while (true){
         // Simulate allocation of an object
