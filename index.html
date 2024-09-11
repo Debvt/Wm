@@ -113,13 +113,16 @@ function performExploit() {
 </script>
 </head>
 <body>
-    <div style="position: fixed; bottom: 0; left: 0; font-size: small; color: black;">
-        Made By <a href="https://hackerone.com/debty" style="text-decoration: underline; color: darkblue;">DebTy</a> As Requested
-        <a href="https://github.com/Debvt/Wm?tab=readme-ov-file" style="text-decoration: underline; color dark blue;>GitHub</a>
-    </div>
-    <button onclick="l6()">Exploit Heap Memory Overflow</button>
-    <button onclick="performExploit()">Latest Iteration</button>
-    <button onclick="y2()">String Overflow</button>
-    <div id="msg"></div>
+ <div style="position: fixed; bottom: 0; left: 0; font-size: small; color: black; padding: 10px; background-color: white;">
+    Made By <a href="https://hackerone.com/debty" style="text-decoration: underline; color: darkblue;">DebTy</a> As Requested
+    <a href="https://github.com/Debvt/Wm?tab=readme-ov-file" style="text-decoration: underline; color: darkblue;">GitHub</a>
+</div>
+
+<!-- Adding margin to the buttons to prevent overlap with the div -->
+<button onclick="l6()" style="margin-bottom: 20px;">Exploit Heap Memory Overflow</button>
+<button onclick="performExploit()" style="margin-bottom: 20px;">Latest Iteration</button>
+<button onclick="y2()" style="margin-bottom: 20px;">String Overflow</button>
+
+<div id="msg"></div>
 </body>
 </html>
