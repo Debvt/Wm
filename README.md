@@ -3,7 +3,7 @@ https://debvt.github.io/Wm/
 
 **Author:https://x.com/idebty?t=MT_ShLOs9wP9hcH3GNtkNA&s=09**
 I'm self taught I don't know any one in the community if you want to use this use it but credit me.
-# WebKit Memory Exhaustion PoC
+# WebKit Memory Leak PoC
 
 ## Description
 This Proof of Concept (PoC) demonstrates a WebKit memory exhaustion exploit that I have been working on. The current iteration works but still needs to be fully exploited. Below is the JavaScript code that shows how it operates, along with explanations of each step.
