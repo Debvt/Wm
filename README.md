@@ -117,7 +117,7 @@ Sony I have reported this and got dismmised and I have provided enough proof plu
 ## heap memory exploit code
 ```javascript
 function memmexh() {
-        while (true){
+        
         // Simulate allocation of an object
         let obj = { data: "important data" };
 
@@ -128,7 +128,7 @@ function memmexh() {
         obj = null;
 
         
-    }
+    
     }
 function ComplexOverflow() {
     let largeString = "A".repeat(1000000); // 1 million A's
@@ -199,18 +199,7 @@ const create_1000_objects = () => {
         // Reference to the object
         let ref = obj;
 
-        console.log("Before freeing:", ref.data); // Output: important data
 
-        // Simulate freeing the object
-        obj = null;
-
-        try {
-            // Attempt to use the reference after the object is "freed"
-            console.log("After freeing:", ref.data); // This should fail in a true use-after-free
-        } catch (e) {
-            console.log("Error:", e.message); // Catch any errors
-        }
-    
         counter++;
         if (counter >= 500) {
             location.reload();
